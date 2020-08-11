@@ -315,7 +315,7 @@ class CognitoUser {
     this.authenticationFlowType = authenticationFlowType;
   }
 
-  void getCachedDeviceKeyAndPassword() async {
+  Future<void> getCachedDeviceKeyAndPassword() async {
     final keyPrefix =
         'CognitoIdentityServiceProvider.${pool.getClientId()}.$username';
     final deviceKeyKey = '$keyPrefix.deviceKey';
@@ -507,7 +507,7 @@ class CognitoUser {
       pool.getUserPoolId().split('_')[1],
     );
 
-    getCachedDeviceKeyAndPassword();
+    await getCachedDeviceKeyAndPassword();
     if (_deviceKey != null) {
       authParameters['DEVICE_KEY'] = _deviceKey;
     }
@@ -539,7 +539,7 @@ class CognitoUser {
     BigInt salt;
 
     final authParameters = {};
-    getCachedDeviceKeyAndPassword();
+    await getCachedDeviceKeyAndPassword();
     if (_deviceKey != null) {
       authParameters['DEVICE_KEY'] = _deviceKey;
     }
@@ -739,7 +739,7 @@ class CognitoUser {
     final authenticationHelper =
         AuthenticationHelper(pool.getUserPoolId().split('_')[1]);
 
-    getCachedDeviceKeyAndPassword();
+    await getCachedDeviceKeyAndPassword();
     if (_deviceKey != null) {
       challengeResponses['DEVICE_KEY'] = _deviceKey;
     }
@@ -785,7 +785,7 @@ class CognitoUser {
     final authenticationHelper =
         AuthenticationHelper(pool.getUserPoolId().split('_')[1]);
 
-    getCachedDeviceKeyAndPassword();
+    await getCachedDeviceKeyAndPassword();
     if (_deviceKey != null) {
       challengeResponses['DEVICE_KEY'] = _deviceKey;
     }
@@ -817,7 +817,7 @@ class CognitoUser {
       challengeResponses['SOFTWARE_TOKEN_MFA_CODE'] = confirmationCode;
     }
 
-    getCachedDeviceKeyAndPassword();
+    await getCachedDeviceKeyAndPassword();
     if (_deviceKey != null) {
       challengeResponses['DEVICE_KEY'] = _deviceKey;
     }
